@@ -35,14 +35,15 @@ pipeline {
             }
         }
 
-        stage('Package') {
-            steps {
-                echo 'Creating runnable JAR...'
-                bat "jar cfe ${JAR_FILE} SimpleAlarm ${CLASS_FILE}"
-                bat "if not exist ${JAR_FILE} (echo ERROR: JAR creation failed! & exit /b 1)"
-            }
-        }
+       stage('Package') {
+    steps {
+        echo 'Creating runnable JAR...'
+        // Include all .class files
+        bat "jar cfe ${JAR_FILE} SimpleAlarm *.class"
+        bat "if not exist ${JAR_FILE} (echo ERROR: JAR creation failed! & exit /b 1)"
     }
+}
+
 
     post {
         always {
