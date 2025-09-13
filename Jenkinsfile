@@ -50,12 +50,7 @@ pipeline {
             echo 'Archiving JAR file for download...'
             archiveArtifacts artifacts: "${JAR_FILE}", allowEmptyArchive: false
         }
-stage('Clean Workspace') {
-    steps {
-        echo 'Cleaning workspace before build...'
-        bat 'if exist * rmdir /s /q *'
-    }
-}
+
 
         success {
             echo 'Build, Test, Package, Deploy succeeded!'
