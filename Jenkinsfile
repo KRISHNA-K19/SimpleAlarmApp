@@ -4,22 +4,22 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Clone your GitHub repo
                 git branch: 'main', url: 'https://github.com/KRISHNA-K19/SimpleAlarmApp.git'
             }
         }
+
         stage('Build') {
             steps {
-                bat 'javac SimpleAlarmApp.java'
+                echo 'Compiling Java program...'
+                bat 'javac SimpleAlarm.java'
             }
         }
-        stage('Package') {
+
+        stage('Run GUI App') {
             steps {
-                bat 'jar cfe SimpleAlarmApp.jar SimpleAlarmApp SimpleAlarmApp.class'
-            }
-        }
-        stage('Archive') {
-            steps {
-                archiveArtifacts artifacts: 'SimpleAlarmApp.jar', fingerprint: true
+                echo 'Launching GUI application...'
+                bat 'start java SimpleAlarm'
             }
         }
     }
