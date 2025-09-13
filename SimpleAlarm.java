@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import javax.sound.sampled.*;
 import java.util.Calendar;
@@ -29,7 +28,7 @@ public class SimpleAlarm {
         // Set Alarm
         setButton.addActionListener(e -> {
             try {
-                String input = timeField.getText();
+                String input = timeField.getText().trim();
                 String[] parts = input.split(":");
                 if (parts.length != 2) throw new Exception("Invalid format");
 
@@ -42,7 +41,7 @@ public class SimpleAlarm {
                 cal.set(Calendar.SECOND, 0);
 
                 long delay = cal.getTimeInMillis() - System.currentTimeMillis();
-                if (delay < 0) delay += 24 * 60 * 60 * 1000; // next day
+                if (delay < 0) delay += 24 * 60 * 60 * 1000; // schedule for next day
 
                 new Timer().schedule(new TimerTask() {
                     public void run() {
@@ -87,7 +86,7 @@ public class SimpleAlarm {
         new Thread(() -> {
             while (ringing) {
                 Toolkit.getDefaultToolkit().beep();
-                try { Thread.sleep(1000); } catch (InterruptedException ex) {}
+                try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
             }
         }).start();
     }
