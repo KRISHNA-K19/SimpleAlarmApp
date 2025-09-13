@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     environment {
-        GIT_CREDENTIALS = '5ef323fb-9b23-4058-8d55-6d9337f15427' // Your Jenkins GitHub credential ID
+        GIT_CREDENTIALS = '5ef323fb-9b23-4058-8d55-6d9337f15427' // Jenkins GitHub credential ID
         JAVA_FILE = 'SimpleAlarm.java'
         CLASS_FILE = 'SimpleAlarm.class'
         JAR_FILE = 'SimpleAlarmApp.jar'
     }
-    
 
     stages {
         stage('Checkout') {
@@ -24,12 +23,7 @@ pipeline {
                 echo 'Checking workspace and files...'
                 bat 'cd'
                 bat 'dir'
-                bat """
-                if not exist ${JAVA_FILE} (
-                    echo ERROR: ${JAVA_FILE} not found!
-                    exit 1
-                )
-                """
+                bat "if not exist ${JAVA_FILE} (echo ERROR: ${JAVA_FILE} not found! & exit /b 1)"
             }
         }
 
@@ -37,12 +31,7 @@ pipeline {
             steps {
                 echo 'Compiling Java program...'
                 bat "javac ${JAVA_FILE}"
-                bat """
-                if not exist ${CLASS_FILE} (
-                    echo ERROR: Compilation failed!
-                    exit 1
-                )
-                """
+                bat "if not exist ${CLASS_FILE} (echo ERROR: Compilation failed! & exit /b 1)"
             }
         }
 
@@ -50,15 +39,10 @@ pipeline {
             steps {
                 echo 'Creating runnable JAR...'
                 bat "jar cfe ${JAR_FILE} SimpleAlarm ${CLASS_FILE}"
-                bat """
-                if not exist ${JAR_FILE} (
-                    echo ERROR: JAR creation failed!
-                    exit 1
-                )
-                """
+                bat "if not exist ${JAR_FILE} (echo ERROR: JAR creation failed! & exit /b 1)"
             }
         }
-
+    }
 
     post {
         always {
@@ -75,3 +59,4 @@ pipeline {
         }
     }
 }
+
