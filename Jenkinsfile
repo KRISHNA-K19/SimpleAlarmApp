@@ -59,13 +59,6 @@ pipeline {
             }
         }
 
-        stage('Deploy / Test') {
-            steps {
-                echo 'Testing JAR execution (GUI may not display in Jenkins)...'
-                bat "java -jar ${JAR_FILE} || echo GUI cannot display in Jenkins service account"
-            }
-        }
-    }
 
     post {
         always {
