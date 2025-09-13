@@ -9,12 +9,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'javac Main.java'
+                bat 'javac SimpleAlarmApp.java'
             }
         }
         stage('Package') {
             steps {
-                bat 'jar cfe SimpleAlarmApp.jar Main Main.class'
+                bat 'jar cfe SimpleAlarmApp.jar SimpleAlarmApp SimpleAlarmApp.class'
             }
         }
         stage('Archive') {
