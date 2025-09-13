@@ -7,6 +7,15 @@ pipeline {
         CLASS_FILE = 'SimpleAlarm.class'
         JAR_FILE = 'SimpleAlarmApp.jar'
     }
+    stages {
+    stage('Check Java') {
+        steps {
+            echo 'Checking Java version'
+            bat 'javac -version'
+            bat 'java -version'
+        }
+    }
+    
 
     stages {
         stage('Checkout') {
